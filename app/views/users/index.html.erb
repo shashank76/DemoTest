@@ -1,0 +1,79 @@
+<div class="content-wrapper">
+   <!-- Content Header (Page header) -->
+   <section class="content-header">
+     <h1> Users </h1>
+   </section>
+   <!-- Main content -->
+   <section class="content">
+    <div class="box box-info">
+      
+      
+           <div class="box-body">
+             <table id="example2" class="table table-bordered table-hover">
+               <thead>
+                 <tr>
+           				<th>Account Number</th>
+           				<th>Name</th>
+                   <th>Email</th>
+                   <th>Mobile</th>
+                   <!-- <th>Date of birth</th> -->
+<!--                   <th>Status</th>
+ -->           				<th>Actions</th>
+           			</tr>
+               </thead>
+               <%= "No user found." unless @users.present?%>
+               <% @users.each do |user| %>
+                 <% unless user.eql?(nil) %>
+                   <tbody>
+                     <tr class="even">
+                       <td><%= user.bank_account.try(:account_no) %></td>
+                       <td><%= truncate(user.name, omision: "...", length: 30) %></td>
+                       <td><%= truncate(user.email, omision: "...", length: 50)%></td>
+                       <td><%= user.mobile%></td>
+                       <!-- <td><%#= user.dob.try(:strftime, "%d %B, %Y")%></td> -->
+                       
+                       <td style="max-width: 350px;">
+                          <%if user.status.eql?(1)%>
+                           <%= link_to 'Deactivate',user_status_admin_users_path(:id => user.id), method: :post,:class=>"btn btn-default btn-red",:data => { :confirm => "Are you sure to deactivate this user?" }%>
+                          <%elsif user.status.eql?(0)%>
+                           <%= link_to 'Activate',user_status_admin_users_path(:id => user.id), method: :post,:class=>"btn btn-default btn-green",:data => { :confirm => "Are you sure to activate this user?" }%>
+                          <%end%>
+                         <a><%= link_to "View", user_path(id: user.id), :class=>"btn btn-default btn-green"%></a>
+                         <a><%#= link_to "Edit", edit_user_path(id: user.id), :class=>"btn btn-default btn-green"%></a>
+                         <a>
+                         <%#= link_to 'Delete'.html_safe,  user_path(user.id), method: :delete,:class=>"btn btn-default btn-red", data: {confirm: 'Are you sure to delete this user?' }%></a>
+                        </td>
+                     </tr>
+                   </tbody>
+                 <%end%>
+               <%end%>
+             </table>
+             <%= will_paginate @users %>
+           </div>
+         </div>
+   </section>
+   <!-- /.content -->
+ </div>
+ <div class="modal fade" id="myModal" role="dialog">
+     <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div id ="data_container">
+            </div>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+     </div>
+ </div>
+ <script type="text/javascript">
+  $(document).ready(function(){
+    $(".add-model").click(function(){
+      $("#myModal").modal('show');
+    });
+  });
+
+ </script>

@@ -1,0 +1,7 @@
+Dear <%= @user.name%>,
+
+Thank you for using your account for a cash <%= @transaction.transaction_type%> of Rs.<%= @transaction.transaction_amount%> on <%= @transaction.created_at.localtime.strftime("%d %B, %Y %I:%M %p")%>.
+
+Available Balance: Rs.<%= @transaction.total_balance%>
+
+The transaction reference No is <%= @transaction.transaction_reference%>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DemoTest</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <%#= javascript_include_tag :defaults, "nested_form" %>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+  <%#= javascript_include_tag "https://www.google.com/jsapi", "chartkick" %>
+  <%#= favicon_link_tag '/favicon.png', :rel => 'shortcut icon' %>
+
+  <!-- <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"> -->
+
+</head>
+<%if current_user %>
+<body class="hold-transition skin-red sidebar-mini fixed">
+<div class="wrapper">
+
+  <header class="main-header">
+    <!-- Logo -->
+    <div class="logo" align="center">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><a href="/home"><img src="/2.jpg" class="user-image ad-log-min" alt="User Image" ></a></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><a href="/home"><img src="/2.jpg" class="user-image ad-log" alt="User Image"></a></span>
+
+    </div>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+
+    <a class="sidebar-toggle menu-txt" id="id-sidebar-toggle" role="button" data-toggle="offcanvas" href="#">
+    <span class="sr-only">Toggle navigation</span>
+    </a>
+    <div class="navbar-custom-menu">
+     <ul class="nav navbar-nav">
+    <li class="dropdown user user-menu">
+          <a href="#" class="dropdown-toggle menu-txt" data-toggle="dropdown">
+            <!-- <img src="/favicon.png" class="user-image" alt="User Image"> -->
+            <%= current_user.try(:image).present? ? image_tag(current_user.try(:image).try(:url),:width => 100, :height => 100, :class => 'user-image') : image_tag("/assets/1.png",:width => 100, :height => 100, :class => 'user-image') %>
+            <span class="hidden-xs"><%= current_user.name.present? ? current_user.name : "Admin" %></span>
+          </a>
+          <ul class="dropdown-menu">
+            <!-- User image -->
+            <li class="user-header">
+              <!-- <img src="/1.png" class="img-circle" alt="/1.png"> -->
+              <%= current_user.try(:image).present? ? image_tag(current_user.try(:image).try(:url),:width => 100, :height => 100, :class => 'img-circle') : image_tag("/assets/1.png",:width => 100, :height => 100, :class => 'img-circle') %>
+              <p>
+                <%= current_user.name.present? ? current_user.name : "Admin" %>
+                <small>Member since <%= current_user.created_at.strftime("%b, %Y")%> </small>
+              </p>
+            </li>
+            <!-- Menu Body -->
+            <!-- <li class="user-body">
+              <div class="row">
+                <div class="col-xs-4 text-center">
+                  <a href="#">Followers</a>
+                </div>
+                <div class="col-xs-4 text-center">
+                  <a href="#">Sales</a>
+                </div>
+                <div class="col-xs-4 text-center">
+                  <a href="#">Friends</a>
+                </div>
+              </div> -->
+              <!-- /.row -->
+            </li>
+            <!-- Menu Footer-->
+            <li class="user-footer">
+              <div class="pull-left">
+                <a href="/home" class="btn btn-default btn-flat">Profile</a>
+              </div>
+              <div class="pull-right">
+                <!-- <a href="/logout" class="btn btn-default btn-flat">Sign out</a> -->
+                <%= link_to "Sign out", logout_path,:class=>"btn btn-default btn-flat", method: :delete %>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can bMerchandisee found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <!-- <img src="/favicon.png" class="img-circle" alt="User Image"> -->
+          <%= current_user.try(:image).present? ? image_tag(current_user.try(:image).try(:url),:width => 100, :height => 100, :class => 'img-circle') : image_tag("/assets/1.png",:width => 100, :height => 100, :class => 'img-circle') %>
+        </div>
+        <div class="pull-left info">
+          <p> <%= current_user.name.present? ? current_user.name : "Admin" %></p>
+          <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
+        </div>
+      </div>
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu">
+        
+        <% if current_user.role.eql?("manager")%>
+          <li class="treeview">
+            <a class="menu-txt" href="/users">
+              <i class="fa fa-users"></i>
+              <span>Users</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-right pull-right"></i>
+              </span>
+            </a>
+          </li>      
+        <%end%>
+          <li class="treeview">
+            <a class="menu-txt" href="/transactions">
+              <i class="fa fa fa-money"></i> <span>Transactions</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-right pull-right"></i>
+              </span>
+            </a>
+          </li>
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+  </div>
+
+<%end%>
+            <%= render :partial => "layouts/flash" %>
+
+            <%= yield %>
+
+<%if current_user%>
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <b>Version</b> 1.0.0
+    </div>
+    <strong>Copyright &copy; <%= Time.current.strftime("%Y")%> <a href="https://www.google.com/" class="fans-link">DemoTest</a>.</strong> All rights
+    reserved.
+  </footer>
+<%end%>
+
+<!-- <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script> -->
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+
+<!-- <script>
+  $.widget.bridge('uibutton', $.ui.button);
+</script> -->
+
+
+</body>
+</html>

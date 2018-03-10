@@ -1,0 +1,62 @@
+<div class="content-wrapper">
+   <!-- Content Header (Page header) -->
+   <section class="content-header">
+     <h1> Transactions </h1>
+   </section>
+   <!-- Main content -->
+   <section class="content">
+    <div class="box box-info">
+      <% if current_user.role.eql?("user")%>
+        <div class="text-right attendee-cent-s form-group">
+        	<%= link_to "Add Transaction", new_transaction_path, :class => "btn btn-default btn-green" %>
+        </div>
+      <%else%>
+        <%= form_tag transactions_path, method: :get, class:"c_form" do  %>
+         <div class="input-group">
+           <%=  text_field_tag :search, nil, class:"form-control",placeholder: 'Search Account Number' %>
+           <div class="input-group-btn">
+             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+           </div>
+         </div>
+        <%end%>
+      <%end%>
+            <p class="transaction-log">
+              Download:
+              <%= link_to "CSV", transactions_path(format: "csv", transaction: @transactions) %> |
+              <%= link_to "Excel", transactions_path(format: "xls", transaction: @transactions) %>
+            </p>
+
+           <div class="box-body">
+             <table id="example2" class="table table-bordered table-hover">
+               <thead>
+                 <tr>
+           				<th>Date</th>
+           				<th>Details</th>
+                  <th>Ref No</th>
+           				<th>Credit/Debit Amount</th>
+           				<th>Balance</th>
+           			</tr>
+               </thead>
+               <% @transactions.each do |trans| %>
+           			<% unless trans.eql?(nil) %>
+           				<tbody>
+           					<tr class="even">
+                    <td><%= trans.created_at.localtime.strftime("%d %B, %Y %I:%M %p") %></td>
+           						<td style="max-width: 200px;">XXXX<%= current_user.bank_account.account_no.last(4) %>/<%= trans.transaction_type %> </td>
+           						<td><%= trans.transaction_reference %></td>
+
+                      <td><%= trans.transaction_amount %></td>
+
+                       <td><%= trans.total_balance %></td>
+           						
+           					</tr>
+           				</tbody>
+           			<%end%>
+           		<%end%>
+           	</table>
+           	<%= will_paginate @leagues %>
+           </div>
+         </div>
+   </section>
+   <!-- /.content -->
+ </div>

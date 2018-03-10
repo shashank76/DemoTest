@@ -1,0 +1,67 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1> User Details</h1>
+
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+   <div class="box box-info">
+     <div class="text-right attendee-cent-s form-group">
+      <%#= link_to "Edit", edit_admin_user_path, :class => "btn btn-default btn-green" %>
+     </div>
+          <!-- /.box-header -->
+      <div class="box-body box-profile">
+          <div class="profile-box">
+          <div class="form-group has-feedback text-center">
+            <%= @user.image.present? ? image_tag(@user.image.url,:width => 100, :height => 100, :class => 'profile-ab') : image_tag("/1.png",:width => 100, :height => 100, :class => 'profile-ab') %>
+          </div>
+          <h3 class="profile-username text-center"><%= @user.name%></h3>
+          <p class="text-muted text-center"><%= @user.address%></p>
+
+        <div class="profile-inner">
+          <div class="p-blocks">
+              <label class="view-a left-a">Account Number</label>
+              <span class="view-a right-a"><%= @user.bank_account.try(:account_no) %></span>
+          </div>
+          <div class="p-blocks">
+              <label class="view-a left-a">Available Balance</label>
+              <span class="view-a right-a"><%= @user.bank_account.try(:account_balance) %></span>
+          </div>
+          <div class="p-blocks">
+              <label class="view-a left-a">Name</label>
+              <span class="view-a right-a"><%= @user.name%></span>
+          </div>
+          <!-- <div class="p-blocks">
+              <label class="view-a left-a">Gender</label>
+              <span class="view-a right-a"><%#= @user.email%></span>
+          </div> -->
+          <div class="p-blocks">
+              <label class="view-a left-a">Date of birth</label>
+              <span class="view-a right-a"><%= @user.dob%></span>
+          </div>
+          <div class="p-blocks">
+              <label class="view-a left-a">Email</label>
+              <span class="view-a right-a"><%= @user.email%></span>
+          </div>
+          <div class="p-blocks">
+              <label class="view-a left-a">Mobile</label>
+              <span class="view-a right-a"><%= @user.mobile%></span>
+          </div>
+          <div class="p-blocks">
+              <label class="view-a left-a">Address</label>
+              <span class="view-a right-a"><%= @user.address%></span>
+          </div>
+      </div>
+
+          </div>
+      </div>
+    </div>
+
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

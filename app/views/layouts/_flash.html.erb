@@ -1,0 +1,10 @@
+<% if flash.present? %>
+  <div class="row flash-alerts">
+    <div class = 'alert alert-dismissable alert-info'>
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      <% flash.each do |name, msg| %>
+        <%= content_tag :h5, msg %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
